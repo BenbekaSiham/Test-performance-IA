@@ -1,0 +1,9 @@
+{
+  "nom_test": "Test de charge API locale",
+  "outil": "Gatling",
+  "type": "charge",
+  "prompt_utilise": "G\u00e9n\u00e8re un script Gatling en Scala pour faire un test de charge afin de simuler 70 utilisateurs progressifs pendant 1 minute, en envoyant une requ\u00eate POST \u00e0 l\u2019URL http://localhost:3000/api/test avec un corps JSON {\"message\": \"Bonjour\" } et un en-t\u00eate Content-Type: application/json.",
+  "date_creation": "2025-12-18T22:34:25.542458Z",
+  "valide": false,
+  "script_Scala": "import io.gatling.core.Predef._\\nimport io.gatling.http.Predef._\\nimport scala.concurrent.duration._\\n\\nclass Test extends Simulation {\\n\\n  // D\u00e9finition de la configuration HTTP\\n  val httpProtocol = http\\n    .baseUrl(\\\"http://localhost:3000\\\") // URL de base\\n    .contentTypeHeader(\\\"application/json\\\")\\n\\n  // D\u00e9finition du sc\u00e9nario\\n  val scn = scenario(\\\"Test POST avec JSON\\\")\\n    .exec(\\n      http(\\\"Requ\u00eate POST\\\")\\n        .post(\\\"/api/test\\\")\\n        .body(StringBody(\\\"\\\"\\\"{ \\\"message\\\": \\\"Bonjour\\\" }\\\"\\\"\\\")).asJson\\n        .check(status.is(200))\\n    )\\n\\n  // D\u00e9finition de la simulation avec ramp-up de 70 utilisateurs sur 60 secondes\\n  setUp(\\n    scn.inject(rampUsers(70).during(60.seconds))\\n  ).protocols(httpProtocol)\\n}"
+}
